@@ -1,23 +1,74 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+:root {
+    --nk-bg: #F8F4EE;
+    --nk-card: #FFFDF9;
+    --nk-alt: #EEE4D8;
+    --nk-text: #2F2D29;
+    --nk-muted: #7C756D;
+    --nk-primary: #6F7F5B;
+    --nk-primary-dark: #536246;
+    --nk-secondary: #C97862;
+    --nk-border: #E5DACE;
+    --nk-success: #7E9A72;
+    --nk-warning: #D8A04D;
+    --nk-error: #B85C5C;
+}
 
-@theme {
-    --font-heading: 'Cormorant Garamond', 'Times New Roman', serif;
-    --font-sans: 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+@layer base {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
 
-    --color-nk-bg: #F7F3EE;
-    --color-nk-card: #FFFAF5;
-    --color-nk-alt: #F1EAE2;
-    --color-nk-text: #2B2A28;
-    --color-nk-muted: #6F675F;
-    --color-nk-primary: #6C7A5A;
-    --color-nk-secondary: #C97B63;
-    --color-nk-border: #DDD3C7;
-    --color-nk-success: #7E9A72;
-    --color-nk-warning: #D8A04D;
-    --color-nk-error: #B85C5C;
+@layer components {
+    .nk-soft-shadow {
+        box-shadow: 0 14px 34px rgba(47, 45, 41, 0.08);
+    }
+
+    .nk-hero-gradient {
+        background: radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.95) 0%, rgba(248, 244, 238, 0.78) 55%, rgba(248, 244, 238, 0.45) 100%);
+    }
+
+    .nk-menu-visual {
+        border-radius: 28px;
+        border: 1px solid var(--nk-border);
+        overflow: hidden;
+        background: #e8dfd1;
+    }
+
+    .nk-floating-card {
+        border-radius: 18px;
+        border: 1px solid var(--nk-border);
+        background: rgba(255, 253, 249, 0.96);
+        box-shadow: 0 10px 24px rgba(47, 45, 41, 0.08);
+    }
+
+    .nk-nav-pill {
+        border-radius: 9999px;
+        border: 1px solid var(--nk-border);
+        background: #fffdf9;
+        box-shadow: 0 2px 6px rgba(47, 45, 41, 0.06);
+    }
+
+    .nk-menu-card {
+        border-radius: 28px;
+        border: 1px solid var(--nk-border);
+        background: var(--nk-card);
+        box-shadow: 0 16px 32px rgba(47, 45, 41, 0.07);
+        overflow: hidden;
+    }
+
+    .nk-print-hidden {
+        display: block;
+    }
+}
+
+@media print {
+    .nk-print-hidden {
+        display: none !important;
+    }
 }
