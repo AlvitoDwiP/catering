@@ -14,14 +14,14 @@
         <h3 class="mb-3 font-heading text-2xl text-nk-text">Pesanan Terbaru</h3>
         <x-admin-table>
             <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted">
-                <tr>
-                    <th class="px-4 py-3">Invoice</th>
-                    <th class="px-4 py-3">Customer</th>
-                    <th class="px-4 py-3">Tanggal Acara</th>
-                    <th class="px-4 py-3">Total</th>
-                    <th class="px-4 py-3">Status</th>
-                    <th class="px-4 py-3">Aksi</th>
-                </tr>
+            <tr>
+                <th class="px-4 py-3">Invoice</th>
+                <th class="px-4 py-3">Customer</th>
+                <th class="px-4 py-3">Tanggal Acara</th>
+                <th class="px-4 py-3">Total</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Aksi</th>
+            </tr>
             </thead>
             <tbody>
             @forelse ($latestOrders as $order)
@@ -29,9 +29,9 @@
                     <td class="px-4 py-3 font-medium text-nk-text">{{ $order->invoice_number }}</td>
                     <td class="px-4 py-3 text-nk-muted">{{ $order->customer_name }}</td>
                     <td class="px-4 py-3 text-nk-muted">{{ $order->event_date?->format('d M Y') }}</td>
-                    <td class="px-4 py-3 text-nk-muted">Rp{{ number_format((float)$order->total_amount, 0, ',', '.') }}</td>
+                    <td class="px-4 py-3 text-nk-muted">Rp{{ number_format((float) $order->total_amount, 0, ',', '.') }}</td>
                     <td class="px-4 py-3"><x-status-badge :status="$order->status" /></td>
-                    <td class="px-4 py-3 text-nk-muted">Detail</td>
+                    <td class="px-4 py-3"><a href="{{ route('admin.orders.show', $order) }}" class="text-nk-primary hover:underline">Detail</a></td>
                 </tr>
             @empty
                 <tr>
@@ -42,14 +42,15 @@
         </x-admin-table>
     </section>
 
-    <section class="mt-8 grid gap-4 md:grid-cols-3">
+    <section class="mt-8 grid gap-4 md:grid-cols-4">
         <x-admin-stat-card label="Menu Rekomendasi" :value="$recommendedMenusCount" />
         <x-admin-stat-card label="Menu Tersedia" :value="$availableMenusCount" />
+        <a href="{{ route('admin.menus.index') }}" class="rounded-[20px] border border-nk-border bg-nk-card p-5 text-sm text-nk-muted hover:bg-nk-alt">Kelola Menu</a>
         <div class="rounded-[20px] border border-nk-border bg-nk-card p-5">
             <p class="text-sm text-nk-muted">Quick Actions</p>
             <div class="mt-3 grid gap-2 text-sm">
-                <a href="#" class="rounded-xl border border-nk-border px-3 py-2 text-nk-muted hover:bg-nk-alt hover:text-nk-text">Kelola Menu</a>
-                <a href="#" class="rounded-xl border border-nk-border px-3 py-2 text-nk-muted hover:bg-nk-alt hover:text-nk-text">Lihat Pesanan</a>
+                <a href="{{ route('admin.menu-categories.index') }}" class="rounded-xl border border-nk-border px-3 py-2 text-nk-muted hover:bg-nk-alt hover:text-nk-text">Kategori Menu</a>
+                <a href="{{ route('admin.orders.index') }}" class="rounded-xl border border-nk-border px-3 py-2 text-nk-muted hover:bg-nk-alt hover:text-nk-text">Lihat Pesanan</a>
                 <a href="{{ route('public.home') }}" class="rounded-xl border border-nk-border px-3 py-2 text-nk-muted hover:bg-nk-alt hover:text-nk-text">Lihat Website</a>
             </div>
         </div>

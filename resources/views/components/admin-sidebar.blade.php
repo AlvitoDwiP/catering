@@ -8,10 +8,9 @@
         @php
             $links = [
                 ['label' => 'Dashboard', 'href' => route('admin.dashboard'), 'active' => request()->routeIs('admin.dashboard')],
-                ['label' => 'Menu', 'href' => '#', 'active' => false],
-                ['label' => 'Kategori Menu', 'href' => '#', 'active' => false],
-                ['label' => 'Pesanan', 'href' => '#', 'active' => false],
-                ['label' => 'Invoice', 'href' => '#', 'active' => false],
+                ['label' => 'Kategori Menu', 'href' => route('admin.menu-categories.index'), 'active' => request()->routeIs('admin.menu-categories.*')],
+                ['label' => 'Menu', 'href' => route('admin.menus.index'), 'active' => request()->routeIs('admin.menus.*')],
+                ['label' => 'Pesanan', 'href' => route('admin.orders.index'), 'active' => request()->routeIs('admin.orders.*')],
             ];
         @endphp
 
