@@ -14,12 +14,16 @@ class MenuCategorySeeder extends Seeder
             'Nasi Kotak',
             'Snack Box',
             'Minuman',
+            'Paket Catering',
         ];
 
         foreach ($categories as $name) {
             MenuCategory::query()->updateOrCreate(
                 ['slug' => Str::slug($name)],
-                ['name' => $name]
+                [
+                    'name' => $name,
+                    'description' => null,
+                ]
             );
         }
     }
