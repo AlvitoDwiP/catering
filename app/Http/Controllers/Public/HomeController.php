@@ -4,14 +4,25 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Services\Cart\CartService;
 use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(CartService $cart): View
     {
-        $recommendedMenus = Menu::query()->available()->recommended()->take(6)->get();
+        $recommendedMenus = Menu::query()
+            ->available()
+            ->recommended()
+            ->latest()
+            ->take(4)
+            ->get();
 
-        return view('public.home', compact('recommendedMenus'));
+        return view('public.home', [
+            'recommendedMenus' => $recommendedMenus,
+            'cartCount' => $cart->count(),
+            'cartTotal' => $cart->totalAmount(),
+            'cartItems' => $cart->all(),
+        ]);
     }
 }

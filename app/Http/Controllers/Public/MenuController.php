@@ -11,13 +11,22 @@ class MenuController extends Controller
 {
     public function index(): View
     {
-        $categories = MenuCategory::query()->with(['menus' => fn ($query) => $query->available()])->get();
+        $menus = Menu::query()
+            ->with('category')
+            ->available()
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
 
-        return view('public.menus.index', compact('categories'));
+        $categories = MenuCategory::query()->orderBy('name')->get();
+
+        return view('public.menus.index', compact('menus', 'categories'));
     }
 
     public function show(Menu $menu): View
     {
+        $menu->load('category');
+
         return view('public.menus.show', compact('menu'));
     }
 }

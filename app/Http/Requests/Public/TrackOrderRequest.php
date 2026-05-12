@@ -14,7 +14,14 @@ class TrackOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_number' => ['required', 'string', 'max:255'],
+            'invoice_number' => ['required', 'string', 'max:50'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'invoice_number' => 'nomor invoice',
         ];
     }
 }

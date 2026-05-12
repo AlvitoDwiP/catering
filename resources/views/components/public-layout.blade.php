@@ -21,6 +21,18 @@
     </header>
 
     <main class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        @if (session('success'))
+            <div class="mb-6 rounded-2xl border border-nk-success/40 bg-nk-success/10 px-4 py-3 text-sm text-nk-text">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="mb-6 rounded-2xl border border-nk-error/40 bg-nk-error/10 px-4 py-3 text-sm text-nk-text">
+                {{ session('error') }}
+            </div>
+        @endif
+
         {{ $slot }}
     </main>
 

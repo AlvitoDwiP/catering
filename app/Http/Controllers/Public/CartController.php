@@ -6,28 +6,41 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\StoreCartItemRequest;
 use App\Http\Requests\Public\UpdateCartItemRequest;
 use App\Models\Menu;
+use App\Services\Cart\CartService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class CartController extends Controller
 {
-    public function index(): View
+    public function index(CartService $cart): View
     {
-        return view('public.cart.index');
+        return view('public.cart.index', [
+            'cartItems' => $cart->all(),
+            'cartTotal' => $cart->totalAmount(),
+            'cartTotalQuantity' => $cart->totalQuantity(),
+            'isEmpty' => $cart->isEmpty(),
+        ]);
     }
 
-    public function store(StoreCartItemRequest $request): RedirectResponse
+    public function store(StoreCartItemRequest $request, CartService $cart): RedirectResponse
     {
-        return redirect()->route('public.cart.index')->with('status', 'Item ditambahkan ke keranjang.');
+        $menu = Menu::query()->findOrFail($request->integer('menu_id'));
+        $cart->add($menu, $request->integer('quantity'));
+
+        return back()->with('success', 'Menu berhasil ditambahkan ke keranjang.');
     }
 
-    public function update(UpdateCartItemRequest $request, Menu $menu): RedirectResponse
+    public function update(UpdateCartItemRequest $request, Menu $menu, CartService $cart): RedirectResponse
     {
-        return redirect()->route('public.cart.index')->with('status', 'Keranjang diperbarui.');
+        $cart->update($menu, $request->integer('quantity'));
+
+        return back()->with('success', 'Jumlah pesanan berhasil diperbarui.');
     }
 
-    public function destroy(Menu $menu): RedirectResponse
+    public function destroy(Menu $menu, CartService $cart): RedirectResponse
     {
-        return redirect()->route('public.cart.index')->with('status', 'Item dihapus dari keranjang.');
+        $cart->remove($menu);
+
+        return back()->with('success', 'Menu berhasil dihapus dari keranjang.');
     }
 }
