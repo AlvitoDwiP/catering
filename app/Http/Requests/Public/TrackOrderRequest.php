@@ -18,6 +18,15 @@ class TrackOrderRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $invoiceNumber = strtoupper(trim((string) $this->input('invoice_number')));
+
+        $this->merge([
+            'invoice_number' => $invoiceNumber,
+        ]);
+    }
+
     public function attributes(): array
     {
         return [

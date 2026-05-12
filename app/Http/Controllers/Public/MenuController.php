@@ -25,6 +25,8 @@ class MenuController extends Controller
 
     public function show(Menu $menu): View
     {
+        abort_unless($menu->is_available, 404);
+
         $menu->load('category');
 
         return view('public.menus.show', compact('menu'));

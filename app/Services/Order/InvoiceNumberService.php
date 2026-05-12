@@ -12,10 +12,21 @@ class InvoiceNumberService
         $today = Carbon::today();
         $prefix = 'INV-' . $today->format('Ymd') . '-';
 
-        $sequence = Order::query()
+        $lastInvoice = Order::query()
             ->whereDate('created_at', $today)
-            ->count() + 1;
+            ->where('invoice_number', 'like', $prefix . '%')
+            ->lockForUpdate()
+            ->orderByDesc('invoice_number')
+            ->value('invoice_number');
 
-        return $prefix . str_pad((string) $sequence, 3, '0', STR_PAD_LEFT);
+        $lastSequence = 0;
+
+        if ($lastInvoice) {
+            $lastSequence = (int) substr($lastInvoice, -3);
+        }
+
+        $nextSequence = $lastSequence + 1;
+
+        return $prefix . str_pad((string) $nextSequence, 3, '0', STR_PAD_LEFT);
     }
 }

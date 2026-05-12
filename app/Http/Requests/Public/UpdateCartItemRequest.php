@@ -29,6 +29,12 @@ class UpdateCartItemRequest extends FormRequest
                 return;
             }
 
+            if (! $menu->is_available) {
+                $validator->errors()->add('quantity', 'Menu ini saat ini belum tersedia.');
+
+                return;
+            }
+
             if ($this->integer('quantity') < $menu->minimum_order) {
                 $validator->errors()->add(
                     'quantity',

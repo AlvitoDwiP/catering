@@ -1,6 +1,6 @@
 <x-guest-layout>
-    <h1 class="font-heading text-3xl text-nk-text">Masuk Admin</h1>
-    <p class="mt-1 text-sm text-nk-muted">Kelola pesanan dan menu Nad's Kitchen.</p>
+    <h1 class="font-heading text-3xl text-nk-text">Masuk Sistem</h1>
+    <p class="mt-1 text-sm text-nk-muted">Akses panel admin atau dapur Nad's Kitchen sesuai role akun Anda.</p>
 
     <x-auth-session-status class="mt-4" :status="session('status')" />
 
