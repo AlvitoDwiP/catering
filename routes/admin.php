@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MenuCategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuIngredientController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])
@@ -29,6 +30,8 @@ Route::middleware(['auth', 'admin'])
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
         Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+
+        Route::get('/reports/orders', [ReportController::class, 'orders'])->name('reports.orders');
 
         Route::get('/invoices/{order}', [InvoiceController::class, 'show'])->name('invoices.show');
     });

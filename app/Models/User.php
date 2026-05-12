@@ -30,4 +30,9 @@ class User extends Authenticatable
     {
         return $this->role === UserRole::Admin;
     }
+
+    public function isKitchen(): bool
+    {
+        return $this->role === UserRole::Kitchen;
+    }
 }

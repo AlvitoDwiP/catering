@@ -1,18 +1,17 @@
-<aside class="hidden w-72 border-r border-nk-border bg-nk-card p-6 lg:block">
-    <a href="{{ route('admin.dashboard') }}" class="block">
+@props(['class' => ''])
+
+<aside {{ $attributes->merge(['class' => 'hidden w-72 border-r border-nk-border bg-nk-card p-6 lg:block ' . $class]) }}>
+    <a href="{{ route('kitchen.dashboard') }}" class="block">
         <p class="font-heading text-3xl text-nk-text">Nad's Kitchen</p>
-        <p class="text-sm text-nk-muted">Admin Panel</p>
+        <p class="text-sm text-nk-muted">Dapur Panel</p>
     </a>
 
     <nav class="mt-8 space-y-2 text-sm">
         @php
             $links = [
-                ['label' => 'Dashboard', 'href' => route('admin.dashboard'), 'active' => request()->routeIs('admin.dashboard')],
-                ['label' => 'Kategori Menu', 'href' => route('admin.menu-categories.index'), 'active' => request()->routeIs('admin.menu-categories.*')],
-                ['label' => 'Menu', 'href' => route('admin.menus.index'), 'active' => request()->routeIs('admin.menus.*')],
-                ['label' => 'Bahan', 'href' => route('admin.ingredients.index'), 'active' => request()->routeIs('admin.ingredients.*')],
-                ['label' => 'Pesanan', 'href' => route('admin.orders.index'), 'active' => request()->routeIs('admin.orders.*')],
-                ['label' => 'Laporan', 'href' => route('admin.reports.orders'), 'active' => request()->routeIs('admin.reports.*')],
+                ['label' => 'Dashboard Dapur', 'href' => route('kitchen.dashboard'), 'active' => request()->routeIs('kitchen.dashboard')],
+                ['label' => 'Pesanan Produksi', 'href' => route('kitchen.production-orders.index'), 'active' => request()->routeIs('kitchen.production-orders.*')],
+                ['label' => 'Rekap Bahan', 'href' => route('kitchen.ingredient-recaps.index'), 'active' => request()->routeIs('kitchen.ingredient-recaps.*')],
             ];
         @endphp
 

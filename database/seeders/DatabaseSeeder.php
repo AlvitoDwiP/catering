@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             IngredientSeeder::class,
             MenuIngredientSeeder::class,
             AdminUserSeeder::class,
+            KitchenUserSeeder::class,
         ]);
     }
 }
