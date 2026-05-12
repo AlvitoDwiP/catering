@@ -6,14 +6,17 @@ use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateOrderStatusRequest;
 use App\Models\Order;
+use App\Services\Production\BomCalculationService;
 use App\Services\Support\WhatsAppMessageService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class OrderController extends Controller
 {
-    public function __construct(private readonly WhatsAppMessageService $whatsAppMessageService)
-    {
+    public function __construct(
+        private readonly WhatsAppMessageService $whatsAppMessageService,
+        private readonly BomCalculationService $bomCalculationService,
+    ) {
     }
 
     public function index(): View
@@ -41,7 +44,12 @@ class OrderController extends Controller
 
     public function show(Order $order): View
     {
-        $order->load(['items.menu']);
+        $order->load(['items.menu.ingredients']);
+
+        $ingredientNeeds = $this->bomCalculationService->calculateForOrder($order);
+        $missingBomMenus = $this->bomCalculationService->missingBomMenus($order);
+        $hasMissingBom = $this->bomCalculationService->hasMissingBom($order);
+
         $message = $this->whatsAppMessageService->invoiceMessage($order);
         $whatsAppUrl = $this->whatsAppMessageService->customerPhoneUrl($order->customer_whatsapp, $message);
 
@@ -49,6 +57,9 @@ class OrderController extends Controller
             'order' => $order,
             'statuses' => OrderStatus::cases(),
             'whatsAppUrl' => $whatsAppUrl,
+            'ingredientNeeds' => $ingredientNeeds,
+            'hasMissingBom' => $hasMissingBom,
+            'missingBomMenus' => $missingBomMenus,
         ]);
     }
 

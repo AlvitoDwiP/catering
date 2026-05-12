@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Menu extends Model
 {
@@ -36,6 +38,18 @@ class Menu extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(MenuCategory::class, 'menu_category_id');
+    }
+
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class, 'menu_ingredients')
+            ->withPivot(['quantity_per_portion', 'unit'])
+            ->withTimestamps();
+    }
+
+    public function menuIngredients(): HasMany
+    {
+        return $this->hasMany(MenuIngredient::class);
     }
 
     public function scopeAvailable(Builder $query): Builder

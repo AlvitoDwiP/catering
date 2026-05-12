@@ -28,7 +28,7 @@
     </x-card>
 
     <x-admin-table>
-        <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Foto</th><th class="px-4 py-3">Nama</th><th class="px-4 py-3">Kategori</th><th class="px-4 py-3">Harga</th><th class="px-4 py-3">Min. Order</th><th class="px-4 py-3">Tersedia</th><th class="px-4 py-3">Rekomendasi</th><th class="px-4 py-3">Aksi</th></tr></thead>
+        <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Foto</th><th class="px-4 py-3">Nama</th><th class="px-4 py-3">Kategori</th><th class="px-4 py-3">Harga</th><th class="px-4 py-3">Min. Order</th><th class="px-4 py-3">Tersedia</th><th class="px-4 py-3">Rekomendasi</th><th class="px-4 py-3">BOM</th><th class="px-4 py-3">Aksi</th></tr></thead>
         <tbody>
         @forelse($menus as $menu)
             <tr class="border-t border-nk-border/80">
@@ -39,10 +39,23 @@
                 <td class="px-4 py-3 text-nk-muted">{{ $menu->minimum_order }} {{ $menu->unit }}</td>
                 <td class="px-4 py-3">{!! $menu->is_available ? '<span class="text-nk-success">Aktif</span>' : '<span class="text-nk-error">Nonaktif</span>' !!}</td>
                 <td class="px-4 py-3">{!! $menu->is_recommended ? '<span class="text-nk-primary">Ya</span>' : '<span class="text-nk-muted">Tidak</span>' !!}</td>
-                <td class="px-4 py-3"><div class="flex gap-2"><x-button :href="route('admin.menus.edit',$menu)" variant="secondary">Edit</x-button><form method="POST" action="{{ route('admin.menus.destroy',$menu) }}">@csrf @method('DELETE')<x-button type="submit" variant="danger">Nonaktifkan</x-button></form></div></td>
+                <td class="px-4 py-3">
+                    @if($menu->menu_ingredients_count > 0)
+                        <span class="rounded-full bg-nk-success/10 px-3 py-1 text-xs font-medium text-nk-success">BOM lengkap</span>
+                    @else
+                        <span class="rounded-full bg-nk-error/10 px-3 py-1 text-xs font-medium text-nk-error">BOM kosong</span>
+                    @endif
+                </td>
+                <td class="px-4 py-3">
+                    <div class="flex flex-wrap gap-2">
+                        <x-button :href="route('admin.menus.ingredients.index', $menu)" variant="secondary">Komposisi</x-button>
+                        <x-button :href="route('admin.menus.edit',$menu)" variant="secondary">Edit</x-button>
+                        <form method="POST" action="{{ route('admin.menus.destroy',$menu) }}">@csrf @method('DELETE')<x-button type="submit" variant="danger">Nonaktifkan</x-button></form>
+                    </div>
+                </td>
             </tr>
         @empty
-            <tr><td colspan="8" class="px-4 py-6 text-center text-nk-muted">Belum ada menu.</td></tr>
+            <tr><td colspan="9" class="px-4 py-6 text-center text-nk-muted">Belum ada menu.</td></tr>
         @endforelse
         </tbody>
     </x-admin-table>

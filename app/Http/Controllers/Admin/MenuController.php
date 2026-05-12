@@ -18,6 +18,7 @@ class MenuController extends Controller
     {
         $menus = Menu::query()
             ->with('category')
+            ->withCount('menuIngredients')
             ->when(request('search'), fn ($q, $search) => $q->where('name', 'like', "%{$search}%"))
             ->when(request('category'), fn ($q, $category) => $q->where('menu_category_id', $category))
             ->when(request()->filled('availability'), fn ($q) => $q->where('is_available', request('availability') === '1'))

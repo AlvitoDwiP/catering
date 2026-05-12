@@ -10,6 +10,7 @@
                 ['label' => 'Dashboard', 'href' => route('admin.dashboard'), 'active' => request()->routeIs('admin.dashboard')],
                 ['label' => 'Kategori Menu', 'href' => route('admin.menu-categories.index'), 'active' => request()->routeIs('admin.menu-categories.*')],
                 ['label' => 'Menu', 'href' => route('admin.menus.index'), 'active' => request()->routeIs('admin.menus.*')],
+                ['label' => 'Bahan', 'href' => route('admin.ingredients.index'), 'active' => request()->routeIs('admin.ingredients.*')],
                 ['label' => 'Pesanan', 'href' => route('admin.orders.index'), 'active' => request()->routeIs('admin.orders.*')],
             ];
         @endphp
