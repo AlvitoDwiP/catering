@@ -1,74 +1,718 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-    --nk-bg: #F8F4EE;
-    --nk-card: #FFFDF9;
-    --nk-alt: #EEE4D8;
-    --nk-text: #2F2D29;
-    --nk-muted: #7C756D;
-    --nk-primary: #6F7F5B;
-    --nk-primary-dark: #536246;
-    --nk-secondary: #C97862;
-    --nk-border: #E5DACE;
-    --nk-success: #7E9A72;
-    --nk-warning: #D8A04D;
-    --nk-error: #B85C5C;
+    --bg: #F7F3EE;
+    --bg-card: #FFFAF5;
+    --bg-alt: #F1EAE2;
+    --text: #2B2A28;
+    --text-secondary: #6F675F;
+    --accent: #6C7A5A;
+    --accent-warm: #C97B63;
+    --border: #DDD3C7;
+    --success: #7E9A72;
+    --warning: #D8A04D;
+    --error: #B85C5C;
+    --placeholder: #9B9289;
+    --shadow: 0 12px 40px rgba(43,42,40,0.04);
+    --shadow-md: 0 4px 20px rgba(43,42,40,0.07);
+    --radius-card: 20px;
+    --radius-btn: 999px;
+    --radius-input: 14px;
+    --font-heading: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --container: 1200px;
 }
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
+        margin: 0;
+        font-family: var(--font-body);
+        color: var(--text);
+        background: var(--bg);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+        color: var(--text);
+    }
+
+    input,
+    textarea,
+    select {
+        height: 46px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-input);
+        background: var(--bg);
+        padding: 0 16px;
+        font-size: 14px;
+        color: var(--text);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--placeholder);
+        font-size: 13.5px;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(108,122,90,0.1);
     }
 }
 
 @layer components {
-    .nk-soft-shadow {
-        box-shadow: 0 14px 34px rgba(47, 45, 41, 0.08);
+    .nk-container {
+        width: 100%;
+        max-width: calc(var(--container) + 112px);
+        margin: 0 auto;
+        padding-left: 56px;
+        padding-right: 56px;
     }
 
-    .nk-hero-gradient {
-        background: radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.95) 0%, rgba(248, 244, 238, 0.78) 55%, rgba(248, 244, 238, 0.45) 100%);
+    .nk-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: 64px;
+        background: rgba(247,243,238,0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
     }
 
-    .nk-menu-visual {
-        border-radius: 28px;
-        border: 1px solid var(--nk-border);
+    .nk-logo-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .nk-nav-link {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        padding: 6px 14px;
+        border-radius: 999px;
+        transition: 0.2s ease;
+    }
+
+    .nk-nav-link:hover,
+    .nk-nav-link.is-active {
+        color: var(--text);
+        background: var(--bg-alt);
+    }
+
+    .nk-cart-pill {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 6px 14px 6px 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+    }
+
+    .nk-btn-primary,
+    .nk-btn-secondary,
+    .nk-btn-contact,
+    .nk-btn-sm,
+    .nk-btn-outline,
+    .nk-btn-checkout,
+    .nk-btn-detail,
+    .nk-btn-add {
+        border-radius: var(--radius-btn);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s ease;
+    }
+
+    .nk-btn-primary,
+    .nk-btn-add,
+    .nk-btn-contact {
+        background: var(--accent);
+        color: #fff;
+    }
+
+    .nk-btn-primary:hover,
+    .nk-btn-add:hover,
+    .nk-btn-contact:hover {
+        filter: brightness(0.95);
+        transform: translateY(-1px);
+    }
+
+    .nk-btn-secondary,
+    .nk-btn-checkout {
+        background: var(--accent-warm);
+        color: #fff;
+    }
+
+    .nk-btn-outline,
+    .nk-btn-detail,
+    .nk-btn-sm {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+    }
+
+    .nk-btn-primary { padding: 10px 22px; font-size: 13.5px; }
+    .nk-btn-secondary { padding: 10px 22px; font-size: 13.5px; }
+    .nk-btn-contact { padding: 8px 18px; font-size: 13px; }
+    .nk-btn-sm { padding: 9px 16px; font-size: 13px; }
+    .nk-btn-outline { padding: 9px 16px; font-size: 13px; }
+    .nk-btn-checkout { padding: 9px 16px; font-size: 13px; }
+    .nk-btn-detail { padding: 9px 16px; font-size: 13px; }
+    .nk-btn-add { padding: 9px 18px; font-size: 13.5px; width: 100%; }
+
+    .nk-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+    }
+
+    .nk-eyebrow::before {
+        content: '';
+        width: 24px;
+        height: 1px;
+        background: var(--accent);
+    }
+
+    .nk-card,
+    .nk-qa-card,
+    .nk-cart-card,
+    .nk-menu-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow);
+    }
+
+    .nk-qa-card,
+    .nk-menu-card {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .nk-qa-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .nk-menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+    .nk-menu-photo {
+        aspect-ratio: 16 / 9;
         overflow: hidden;
-        background: #e8dfd1;
+    }
+
+    .nk-menu-photo-inner {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+    }
+
+    .nk-badge-available {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 11.5px;
+        font-weight: 600;
+        background: rgba(126,154,114,0.14);
+        color: #5F7E55;
+    }
+
+    .nk-badge-available::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: #5F7E55;
+    }
+
+    .nk-menu-min {
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg-alt);
+        padding: 4px 10px;
+        font-size: 12px;
+        color: var(--text-secondary);
     }
 
     .nk-floating-card {
-        border-radius: 18px;
-        border: 1px solid var(--nk-border);
-        background: rgba(255, 253, 249, 0.96);
-        box-shadow: 0 10px 24px rgba(47, 45, 41, 0.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 16px;
+        box-shadow: var(--shadow-md);
     }
 
-    .nk-nav-pill {
-        border-radius: 9999px;
-        border: 1px solid var(--nk-border);
-        background: #fffdf9;
-        box-shadow: 0 2px 6px rgba(47, 45, 41, 0.06);
+    .nk-info-section {
+        background: var(--bg-alt);
+        padding: 80px 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
     }
 
-    .nk-menu-card {
-        border-radius: 28px;
-        border: 1px solid var(--nk-border);
-        background: var(--nk-card);
-        box-shadow: 0 16px 32px rgba(47, 45, 41, 0.07);
-        overflow: hidden;
+    .nk-info-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg-card);
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .nk-print-hidden {
-        display: block;
+    .nk-footer {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        padding: 40px 0;
+    }
+
+    .fade-up,
+    .fade-up-d1,
+    .fade-up-d2,
+    .fade-up-d3,
+    .fade-up-d4 {
+        opacity: 0;
+        animation: fadeUp 0.7s ease forwards;
+    }
+
+    .fade-up-d1 { animation-delay: 0.08s; }
+    .fade-up-d2 { animation-delay: 0.16s; }
+    .fade-up-d3 { animation-delay: 0.24s; }
+    .fade-up-d4 { animation-delay: 0.32s; }
+
+    .nk-dot-pulse {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--success);
+        animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .nk-input-error {
+        border-color: var(--error) !important;
+        box-shadow: 0 0 0 3px rgba(184,92,92,0.15) !important;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.24); opacity: 0.6; }
+}
+
+@media (max-width: 1024px) {
+    .nk-container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nk-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .nk-cart-pill {
+        padding: 5px 10px 5px 8px;
+        font-size: 12px;
+    }
+}
+
+@layer components {
+    .nk-date-block {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .nk-date-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+    }
+
+    .nk-date-value {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        line-height: 1.2;
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .nk-date-subvalue {
+        font-size: 13px;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+    }
+
+    .nk-date-badge {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        background: var(--bg-alt);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+    }
+
+    .nk-date-muted {
+        color: var(--text-secondary);
+    }
+
+    .nk-date-warning {
+        color: var(--error);
+    }
+
+    .nk-date-success {
+        color: var(--success);
     }
 }
 
 @media print {
-    .nk-print-hidden {
-        display: none !important;
+    .nk-date-label,
+    .nk-date-subvalue,
+    .nk-date-badge,
+    .nk-date-muted {
+        color: #2B2A28 !important;
+    }
+
+    .nk-date-value,
+    .nk-date-warning,
+    .nk-date-success {
+        color: #1F1E1C !important;
+    }
+
+    .nk-date-badge {
+        background: #F1EAE2 !important;
+        border-color: #CFC4B8 !important;
+        box-shadow: none !important;
+    }
+}
+
+@layer components {
+    .nk-schedule-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .nk-schedule-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+    }
+
+    .nk-schedule-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px 18px;
+        background: var(--bg-card);
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nk-schedule-card:hover {
+        border-color: var(--accent);
+    }
+
+    .nk-schedule-card:focus-within {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(108,122,90,0.14);
+    }
+
+    .nk-schedule-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .nk-schedule-value {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        line-height: 1.15;
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .nk-schedule-help {
+        margin-top: 2px;
+        font-size: 12.5px;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+    }
+
+    .nk-time-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .nk-time-option {
+        height: 38px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .nk-time-option:hover {
+        border-color: var(--accent);
+        color: var(--text);
+    }
+
+    .nk-time-option:focus-visible {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(108,122,90,0.14);
+    }
+
+    .nk-time-option.is-active {
+        border-color: var(--accent);
+        background: rgba(108,122,90,0.12);
+        color: var(--text);
+    }
+
+    .nk-date-native-hidden {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .nk-time-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nk-schedule-value {
+        font-size: 19px;
+    }
+}
+
+@layer components {
+    .nk-checkout-grid {
+        display: grid;
+        align-items: start;
+        gap: 20px;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .nk-checkout-form-card {
+        padding: 32px !important;
+    }
+
+    .nk-checkout-summary-card {
+        align-self: start;
+    }
+
+    .nk-schedule-field {
+        gap: 9px;
+    }
+
+    .nk-schedule-label {
+        font-size: 14px;
+        letter-spacing: 0;
+        text-transform: none;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .nk-schedule-card {
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+    }
+
+    .nk-schedule-main {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex: 1;
+    }
+
+    .nk-schedule-content {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .nk-schedule-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .nk-schedule-value {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+
+    .nk-schedule-help {
+        margin-top: 3px;
+        font-size: 12.8px;
+        color: var(--text-secondary);
+    }
+
+    .nk-schedule-action {
+        border: 1px solid var(--border);
+        background: var(--bg);
+        border-radius: 999px;
+        padding: 7px 13px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: var(--text);
+        white-space: nowrap;
+    }
+
+    .nk-time-grid {
+        margin-top: 8px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .nk-time-option {
+        height: 36px;
+        font-size: 12.8px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .nk-time-option.is-active {
+        background: rgba(108,122,90,0.14);
+        border-color: var(--accent);
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    .nk-time-option.is-active::before {
+        content: '✓';
+        font-size: 11px;
+        line-height: 1;
+    }
+
+    .nk-summary-row {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .nk-summary-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+
+    .nk-summary-value {
+        font-size: 13.5px;
+        color: var(--text);
+        line-height: 1.5;
+    }
+
+    .nk-summary-note {
+        font-size: 12.5px;
+        color: var(--text-secondary);
+        border-top: 1px solid var(--border);
+        padding-top: 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nk-checkout-grid {
+        grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+    }
+
+    .nk-checkout-summary-card {
+        position: sticky;
+        top: 96px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nk-checkout-form-card {
+        padding: 20px !important;
+    }
+
+    .nk-time-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nk-schedule-value {
+        font-size: 18px;
     }
 }

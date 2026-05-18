@@ -68,7 +68,7 @@
             <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Tanggal acara</th><th class="px-4 py-3">Jumlah pesanan</th><th class="px-4 py-3">Total transaksi</th></tr></thead>
             <tbody>
             @forelse($dailyOrders as $day)
-                <tr class="border-t border-nk-border/80"><td class="px-4 py-3">{{ \Carbon\Carbon::parse($day->event_date)->format('d M Y') }}</td><td class="px-4 py-3 text-nk-muted">{{ $day->total_orders }}</td><td class="px-4 py-3 text-nk-muted">Rp {{ number_format((float) $day->total_revenue, 0, ',', '.') }}</td></tr>
+                <tr class="border-t border-nk-border/80"><td class="px-4 py-3"><x-date-time :date="$day->event_date" variant="compact" :show-day="false" /></td><td class="px-4 py-3 text-nk-muted">{{ $day->total_orders }}</td><td class="px-4 py-3 text-nk-muted">Rp {{ number_format((float) $day->total_revenue, 0, ',', '.') }}</td></tr>
             @empty
                 <tr><td colspan="3" class="px-4 py-6 text-center text-nk-muted">Tidak ada data harian.</td></tr>
             @endforelse
@@ -79,10 +79,10 @@
     <section class="mt-6">
         <h3 class="mb-3 font-heading text-2xl">Latest Orders</h3>
         <x-admin-table>
-            <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Invoice</th><th class="px-4 py-3">Customer</th><th class="px-4 py-3">Tanggal acara</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Total</th></tr></thead>
+            <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Invoice</th><th class="px-4 py-3">Customer</th><th class="px-4 py-3">Jadwal acara</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Total</th></tr></thead>
             <tbody>
             @forelse($latestOrders as $order)
-                <tr class="border-t border-nk-border/80"><td class="px-4 py-3">{{ $order->invoice_number }}</td><td class="px-4 py-3">{{ $order->customer_name }}</td><td class="px-4 py-3 text-nk-muted">{{ $order->event_date?->format('d M Y') }}</td><td class="px-4 py-3"><x-status-badge :status="$order->status" /></td><td class="px-4 py-3 text-nk-muted"><x-price :amount="$order->total_amount" /></td></tr>
+                <tr class="border-t border-nk-border/80 align-top"><td class="px-4 py-3">{{ $order->invoice_number }}</td><td class="px-4 py-3">{{ $order->customer_name }}</td><td class="px-4 py-3 text-nk-muted"><x-date-time :date="$order->event_date" :time="$order->event_time" variant="compact" /></td><td class="px-4 py-3"><x-status-badge :status="$order->status" /></td><td class="px-4 py-3 text-nk-muted"><x-price :amount="$order->total_amount" /></td></tr>
             @empty
                 <tr><td colspan="5" class="px-4 py-6 text-center text-nk-muted">Tidak ada pesanan.</td></tr>
             @endforelse

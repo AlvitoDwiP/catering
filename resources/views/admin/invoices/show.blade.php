@@ -8,17 +8,17 @@
 
     <x-card padding="lg">
         <h1 class="font-heading text-4xl">Invoice Admin</h1>
-        <p class="mt-2 text-sm text-nk-muted">{{ $order->invoice_number }} • {{ $order->created_at->format('d M Y H:i') }}</p>
+        <p class="mt-2 text-sm text-nk-muted">{{ $order->invoice_number }}</p>
+        <x-date-time label="Dipesan pada" :date="$order->created_at" :time="$order->created_at" variant="compact" class="mt-1" :show-day="false" />
 
-        <div class="mt-5 grid gap-4 md:grid-cols-2 text-sm text-nk-muted">
+        <div class="mt-5 grid gap-4 text-sm text-nk-muted md:grid-cols-2">
             <div>
                 <p>Customer: {{ $order->customer_name }}</p>
                 <p>WhatsApp: {{ $order->customer_whatsapp }}</p>
                 <p>Alamat acara: {{ $order->event_address }}</p>
             </div>
-            <div>
-                <p>Tanggal acara: {{ $order->event_date?->format('d M Y') }}</p>
-                <p>Jam acara: {{ $order->event_time }}</p>
+            <div class="space-y-2">
+                <x-date-time label="Jadwal Acara" :date="$order->event_date" :time="$order->event_time" variant="stacked" />
                 <p>Status: {{ $order->status->label() }}</p>
             </div>
         </div>

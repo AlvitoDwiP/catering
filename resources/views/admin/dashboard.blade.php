@@ -17,7 +17,7 @@
             <tr>
                 <th class="px-4 py-3">Invoice</th>
                 <th class="px-4 py-3">Customer</th>
-                <th class="px-4 py-3">Tanggal Acara</th>
+                <th class="px-4 py-3">Jadwal Acara</th>
                 <th class="px-4 py-3">Total</th>
                 <th class="px-4 py-3">Status</th>
                 <th class="px-4 py-3">Aksi</th>
@@ -25,10 +25,12 @@
             </thead>
             <tbody>
             @forelse ($latestOrders as $order)
-                <tr class="border-t border-nk-border/80">
+                <tr class="border-t border-nk-border/80 align-top">
                     <td class="px-4 py-3 font-medium text-nk-text">{{ $order->invoice_number }}</td>
                     <td class="px-4 py-3 text-nk-muted">{{ $order->customer_name }}</td>
-                    <td class="px-4 py-3 text-nk-muted">{{ $order->event_date?->format('d M Y') }}</td>
+                    <td class="px-4 py-3 text-nk-muted">
+                        <x-date-time :date="$order->event_date" :time="$order->event_time" variant="compact" />
+                    </td>
                     <td class="px-4 py-3 text-nk-muted">Rp{{ number_format((float) $order->total_amount, 0, ',', '.') }}</td>
                     <td class="px-4 py-3"><x-status-badge :status="$order->status" /></td>
                     <td class="px-4 py-3"><a href="{{ route('admin.orders.show', $order) }}" class="text-nk-primary hover:underline">Detail</a></td>

@@ -13,11 +13,15 @@
 
             <div>
                 <h2 class="font-heading text-2xl text-nk-text">Data Acara</h2>
-                <div class="mt-2 space-y-1 text-sm text-nk-muted">
-                    <p>Tanggal: {{ \Carbon\Carbon::parse($customerData['event_date'])->format('d M Y') }}</p>
-                    <p>Jam: {{ $customerData['event_time'] }}</p>
-                    <p>Alamat: {{ $customerData['event_address'] }}</p>
-                    <p>Catatan: {{ $customerData['notes'] ?: '-' }}</p>
+                <div class="mt-2 space-y-3">
+                    <x-date-time
+                        label="Jadwal Acara"
+                        :date="$customerData['event_date'] ?? null"
+                        :time="$customerData['event_time'] ?? null"
+                        variant="stacked"
+                    />
+                    <p class="text-sm text-nk-muted">Alamat: {{ $customerData['event_address'] }}</p>
+                    <p class="text-sm text-nk-muted">Catatan: {{ $customerData['notes'] ?: '-' }}</p>
                 </div>
             </div>
 

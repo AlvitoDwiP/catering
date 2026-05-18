@@ -17,7 +17,7 @@
                 <tr class="border-t border-nk-border/80">
                     <td class="px-4 py-3">{{ $order->invoice_number }}</td>
                     <td class="px-4 py-3">{{ $order->customer_name }}</td>
-                    <td class="px-4 py-3 text-nk-muted">{{ $order->event_time }}</td>
+                    <td class="px-4 py-3 text-nk-muted"><x-date-time :date="$order->event_date" :time="$order->event_time" variant="compact" /></td>
                     <td class="px-4 py-3 text-sm text-nk-muted">{{ $order->items->pluck('menu_name')->take(2)->implode(', ') }}{{ $order->items->count() > 2 ? '...' : '' }}</td>
                     <td class="px-4 py-3"><x-status-badge :status="$order->status" /></td>
                     <td class="px-4 py-3"><x-button :href="route('kitchen.production-orders.show', $order)" variant="secondary">Detail</x-button></td>
@@ -35,7 +35,7 @@
             <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Bahan</th><th class="px-4 py-3">Total kebutuhan</th><th class="px-4 py-3">Satuan</th></tr></thead>
             <tbody>
             @forelse($todayIngredientRecap as $item)
-                <tr class="border-t border-nk-border/80"><td class="px-4 py-3">{{ $item['ingredient_name'] }}</td><td class="px-4 py-3 text-nk-muted">{{ number_format((float) $item['total_quantity'], 2, '.', ',') }}</td><td class="px-4 py-3 text-nk-muted">{{ $item['ingredient_unit'] }}</td></tr>
+                <tr class="border-t border-nk-border/80"><td class="px-4 py-3">{{ $item['ingredient_name'] }}</td><td class="px-4 py-3 text-nk-muted"><x-ingredient-qty :value="$item['total_quantity']" :unit="$item['ingredient_unit']" /></td><td class="px-4 py-3 text-nk-muted">{{ $item['ingredient_unit'] }}</td></tr>
             @empty
                 <tr><td colspan="3" class="px-4 py-6 text-center text-nk-muted">Belum ada rekap bahan untuk hari ini.</td></tr>
             @endforelse
@@ -50,7 +50,7 @@
                 @forelse($upcomingOrders as $order)
                     <li class="flex items-center justify-between gap-2 border-b border-nk-border/70 pb-2 last:border-b-0 last:pb-0">
                         <span>{{ $order->invoice_number }} - {{ $order->customer_name }}</span>
-                        <span class="text-nk-muted">{{ $order->event_date?->format('d M Y') }} {{ $order->event_time }}</span>
+                        <x-date-time :date="$order->event_date" :time="$order->event_time" variant="badge" />
                     </li>
                 @empty
                     <li class="text-nk-muted">Belum ada pesanan upcoming.</li>

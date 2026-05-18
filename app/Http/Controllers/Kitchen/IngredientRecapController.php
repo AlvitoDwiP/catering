@@ -14,8 +14,14 @@ class IngredientRecapController extends Controller
 {
     public function index(Request $request, BomCalculationService $bomCalculationService): View
     {
-        $date = $request->input('date', Carbon::today()->toDateString());
         $statuses = [OrderStatus::Confirmed->value, OrderStatus::Processing->value];
+        $nearestEventDate = Order::query()
+            ->whereIn('status', $statuses)
+            ->whereDate('event_date', '>=', Carbon::today()->toDateString())
+            ->orderBy('event_date')
+            ->value('event_date');
+
+        $date = $request->input('date', $nearestEventDate ?: Carbon::today()->toDateString());
 
         $orders = Order::query()
             ->with(['items.menu.ingredients'])

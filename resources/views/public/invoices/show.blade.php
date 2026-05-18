@@ -6,7 +6,7 @@
             <div>
                 <p class="text-sm text-nk-muted">Invoice Number</p>
                 <p class="font-heading text-3xl text-nk-text">{{ $order->invoice_number }}</p>
-                <p class="text-sm text-nk-muted">Tanggal Invoice: {{ $order->created_at->format('d M Y H:i') }}</p>
+                <x-date-time label="Dipesan pada" :date="$order->created_at" :time="$order->created_at" variant="compact" class="mt-1" :show-day="false" />
             </div>
             <x-status-badge :status="$order->status" />
         </div>
@@ -23,9 +23,8 @@
             </div>
             <div>
                 <p class="text-sm font-semibold text-nk-text">Data Acara</p>
-                <div class="mt-2 space-y-1 text-sm text-nk-muted">
-                    <p>Tanggal: {{ $order->event_date?->format('d M Y') }}</p>
-                    <p>Jam: {{ $order->event_time }}</p>
+                <div class="mt-2 space-y-3 text-sm text-nk-muted">
+                    <x-date-time label="Jadwal Acara" :date="$order->event_date" :time="$order->event_time" variant="stacked" />
                     <p>Alamat: {{ $order->event_address }}</p>
                     <p>Catatan: {{ $order->notes ?: '-' }}</p>
                 </div>

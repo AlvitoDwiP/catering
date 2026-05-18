@@ -19,21 +19,20 @@
     </x-card>
 
     <x-admin-table>
-        <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Invoice</th><th class="px-4 py-3">Customer</th><th class="px-4 py-3">Tanggal acara</th><th class="px-4 py-3">Jam</th><th class="px-4 py-3">Menu</th><th class="px-4 py-3">Total</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Aksi</th></tr></thead>
+        <thead class="bg-nk-alt/70 text-xs uppercase tracking-wide text-nk-muted"><tr><th class="px-4 py-3">Invoice</th><th class="px-4 py-3">Customer</th><th class="px-4 py-3">Jadwal Acara</th><th class="px-4 py-3">Menu</th><th class="px-4 py-3">Total</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Aksi</th></tr></thead>
         <tbody>
         @forelse($orders as $order)
-            <tr class="border-t border-nk-border/80">
+            <tr class="border-t border-nk-border/80 align-top">
                 <td class="px-4 py-3">{{ $order->invoice_number }}</td>
                 <td class="px-4 py-3">{{ $order->customer_name }}</td>
-                <td class="px-4 py-3 text-nk-muted">{{ $order->event_date?->format('d M Y') }}</td>
-                <td class="px-4 py-3 text-nk-muted">{{ $order->event_time }}</td>
+                <td class="px-4 py-3 text-nk-muted"><x-date-time :date="$order->event_date" :time="$order->event_time" variant="compact" /></td>
                 <td class="px-4 py-3 text-sm text-nk-muted">{{ $order->items->pluck('menu_name')->take(2)->implode(', ') }}{{ $order->items->count() > 2 ? '...' : '' }}</td>
                 <td class="px-4 py-3 text-nk-muted"><x-price :amount="$order->total_amount" /></td>
                 <td class="px-4 py-3"><x-status-badge :status="$order->status" /></td>
                 <td class="px-4 py-3"><x-button :href="route('kitchen.production-orders.show', $order)" variant="secondary">Detail</x-button></td>
             </tr>
         @empty
-            <tr><td colspan="8" class="px-4 py-6 text-center text-nk-muted">Tidak ada pesanan produksi.</td></tr>
+            <tr><td colspan="7" class="px-4 py-6 text-center text-nk-muted">Tidak ada pesanan produksi.</td></tr>
         @endforelse
         </tbody>
     </x-admin-table>

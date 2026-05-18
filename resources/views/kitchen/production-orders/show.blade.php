@@ -2,10 +2,9 @@
     <x-admin-page-header title="Detail Produksi Pesanan" description="{{ $order->invoice_number }}" />
 
     <div class="grid gap-4 lg:grid-cols-2">
-        <x-card class="space-y-2" padding="lg">
+        <x-card class="space-y-3" padding="lg">
             <h3 class="font-heading text-2xl">Data Acara</h3>
-            <p class="text-sm text-nk-muted">Tanggal: {{ $order->event_date?->format('d M Y') }}</p>
-            <p class="text-sm text-nk-muted">Jam: {{ $order->event_time }}</p>
+            <x-date-time label="Jadwal Acara" :date="$order->event_date" :time="$order->event_time" variant="stacked" />
             <p class="text-sm text-nk-muted">Alamat: {{ $order->event_address }}</p>
             <p class="text-sm text-nk-muted">Catatan customer: {{ $order->notes ?: '-' }}</p>
         </x-card>
@@ -50,11 +49,11 @@
                 @forelse($ingredientNeeds as $need)
                     <tr class="border-t border-nk-border/80 align-top">
                         <td class="px-4 py-3">{{ $need['ingredient_name'] }}</td>
-                        <td class="px-4 py-3 text-nk-muted">{{ number_format((float) $need['total_quantity'], 2, '.', ',') }}</td>
+                        <td class="px-4 py-3 text-nk-muted"><x-ingredient-qty :value="$need['total_quantity']" :unit="$need['ingredient_unit']" /></td>
                         <td class="px-4 py-3 text-nk-muted">{{ $need['ingredient_unit'] }}</td>
                         <td class="px-4 py-3 text-sm text-nk-muted">
                             @foreach($need['details'] as $detail)
-                                <p>{{ $detail['menu_name'] }}: {{ number_format((float) $detail['quantity_per_portion'], 2, '.', ',') }} {{ $detail['unit'] }} x {{ $detail['order_quantity'] }} porsi = {{ number_format((float) $detail['total_quantity'], 2, '.', ',') }} {{ $detail['unit'] }}</p>
+                                <p>{{ $detail['menu_name'] }}: <x-ingredient-qty :value="$detail['quantity_per_portion']" :unit="$detail['unit']" /> {{ $detail['unit'] }} × <x-ingredient-qty :value="$detail['order_quantity']" unit="porsi" /> porsi = <x-ingredient-qty :value="$detail['total_quantity']" :unit="$detail['unit']" /> {{ $detail['unit'] }}</p>
                             @endforeach
                         </td>
                     </tr>
