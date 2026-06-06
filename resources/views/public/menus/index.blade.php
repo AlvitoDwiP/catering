@@ -36,29 +36,87 @@
         </div>
     </section>
 
-    <section class="mt-10">
-        <div class="flex items-center justify-between gap-4 border-b border-[var(--border)] pb-4 max-md:flex-col max-md:items-start">
-            <div class="flex flex-wrap items-center gap-2">
-                <a href="{{ route('public.menus.index') }}" class="{{ $selectedCategory ? 'nk-btn-detail' : 'nk-btn-primary' }}">Semua</a>
-                @foreach ($categories as $category)
-                    <a
-                        href="{{ route('public.menus.index', ['category' => $category->slug]) }}"
-                        class="{{ $selectedCategory === $category->slug ? 'nk-btn-primary' : 'nk-btn-detail' }}"
-                    >
-                        {{ $category->name }}
-                    </a>
-                @endforeach
+    <section class="mt-10 rounded-[32px] border border-[var(--border)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow)] lg:p-6">
+        <form method="GET" action="{{ route('public.menus.index') }}" class="grid gap-4 lg:grid-cols-[1.15fr_0.55fr_0.3fr_auto]">
+            @if ($selectedCategory)
+                <input type="hidden" name="category" value="{{ $selectedCategory }}">
+            @endif
+
+            <div class="space-y-2">
+                <label for="menu-search" class="text-sm font-medium tracking-[-0.01em] text-nk-text">Cari menu</label>
+                <input
+                    id="menu-search"
+                    name="q"
+                    value="{{ $search }}"
+                    placeholder="Cari nasi box, snack box, minuman..."
+                    class="w-full rounded-2xl border border-nk-border bg-white/80 px-4 py-3 text-sm text-nk-text shadow-sm placeholder:text-nk-muted focus:border-nk-primary focus:outline-none focus:ring-4 focus:ring-nk-primary/10"
+                >
             </div>
 
-            @if ($selectedCategoryModel)
-                <p class="text-[13px] text-[var(--text-secondary)]">
-                    Sedang menampilkan: <span class="font-medium text-[var(--text)]">{{ $selectedCategoryModel->name }}</span>
-                </p>
-            @endif
+            <div class="space-y-2">
+                <label for="menu-sort" class="text-sm font-medium tracking-[-0.01em] text-nk-text">Urutkan</label>
+                <select
+                    id="menu-sort"
+                    name="sort"
+                    class="w-full rounded-2xl border border-nk-border bg-white/80 px-4 py-3 text-sm text-nk-text shadow-sm focus:border-nk-primary focus:outline-none focus:ring-4 focus:ring-nk-primary/10"
+                >
+                    <option value="recommended" @selected($sort === 'recommended')>Rekomendasi</option>
+                    <option value="price_asc" @selected($sort === 'price_asc')>Harga terendah</option>
+                    <option value="price_desc" @selected($sort === 'price_desc')>Harga tertinggi</option>
+                    <option value="name_asc" @selected($sort === 'name_asc')>Nama A-Z</option>
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium tracking-[-0.01em] text-nk-text">Kategori</label>
+                <select
+                    name="category"
+                    class="w-full rounded-2xl border border-nk-border bg-white/80 px-4 py-3 text-sm text-nk-text shadow-sm focus:border-nk-primary focus:outline-none focus:ring-4 focus:ring-nk-primary/10"
+                >
+                    <option value="">Semua kategori</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->slug }}" @selected($selectedCategory === $category->slug)>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex items-end gap-3">
+                <button type="submit" class="nk-btn-primary w-full">Terapkan</button>
+                @if ($search || $selectedCategory || $sort !== 'recommended')
+                    <a href="{{ route('public.menus.index') }}" class="nk-btn-detail whitespace-nowrap">Reset</a>
+                @endif
+            </div>
+        </form>
+
+        <div class="mt-5 flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-5">
+            <a href="{{ route('public.menus.index', array_filter(['q' => $search, 'sort' => $sort])) }}" class="{{ ! $selectedCategory ? 'nk-btn-primary' : 'nk-btn-detail' }}">Semua</a>
+            @foreach ($categories as $category)
+                <a
+                    href="{{ route('public.menus.index', array_filter(['category' => $category->slug, 'q' => $search, 'sort' => $sort])) }}"
+                    class="{{ $selectedCategory === $category->slug ? 'nk-btn-primary' : 'nk-btn-detail' }}"
+                >
+                    {{ $category->name }}
+                </a>
+            @endforeach
         </div>
     </section>
 
-    <section class="mt-8">
+    <section class="mt-8 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-[13px] text-[var(--text-secondary)]">
+            Menampilkan <span class="font-medium text-[var(--text)]">{{ $menus->count() }}</span> dari <span class="font-medium text-[var(--text)]">{{ $menus->total() }}</span> menu
+            @if ($selectedCategoryModel)
+                pada kategori <span class="font-medium text-[var(--text)]">{{ $selectedCategoryModel->name }}</span>
+            @endif
+            @if ($search !== '')
+                untuk pencarian “<span class="font-medium text-[var(--text)]">{{ $search }}</span>”
+            @endif
+        </p>
+        @if ($selectedCategoryModel || $search !== '' || $sort !== 'recommended')
+            <p class="text-[13px] text-[var(--text-secondary)]">Gunakan filter untuk mempersempit hasil dengan cepat.</p>
+        @endif
+    </section>
+
+    <section class="mt-5">
         <div class="grid gap-5 lg:grid-cols-3 md:grid-cols-2">
             @forelse ($menus as $menu)
                 <article class="group overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--bg-card)] shadow-[var(--shadow)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-md)]">

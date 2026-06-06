@@ -17,7 +17,7 @@
     use Illuminate\Support\Facades\Vite;
     use Illuminate\Support\Str;
 
-    $resolveSource = static function (?string $source): ?string {
+    $resolveSource = static function (?string $source, string $context = 'image'): ?string {
         if (! $source) {
             return null;
         }
@@ -26,7 +26,17 @@
             return $source;
         }
 
-        return Vite::asset($source);
+        try {
+            return Vite::asset($source);
+        } catch (Throwable $exception) {
+            logger()->warning('Unable to resolve Vite asset for food image.', [
+                'context' => $context,
+                'source' => $source,
+                'exception' => $exception->getMessage(),
+            ]);
+
+            return null;
+        }
     };
 
     $imageSource = $src;
@@ -41,8 +51,12 @@
         $placeholderSource = Arr::get(config('image-map.placeholders'), $placeholderKey);
     }
 
-    $resolvedSource = $resolveSource($imageSource);
-    $resolvedPlaceholder = $resolveSource($placeholderSource);
+    $resolvedSource = $resolveSource($imageSource, 'primary');
+    $resolvedPlaceholder = $resolveSource($placeholderSource, 'placeholder');
+
+    if (! $resolvedSource) {
+        $resolvedSource = $resolvedPlaceholder;
+    }
 @endphp
 
 <div

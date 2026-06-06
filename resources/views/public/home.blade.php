@@ -189,6 +189,61 @@
         </div>
     </section>
 
+    <section id="why-choose-us" class="pt-16">
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p class="nk-eyebrow">Why Choose Us</p>
+                <h2 class="mt-4 text-[clamp(2rem,4vw,3.15rem)] font-normal tracking-[-0.02em]">Alasan halaman ini terasa lebih premium</h2>
+            </div>
+            <p class="max-w-[420px] text-[14px] leading-[1.7] text-[var(--text-secondary)]">
+                Bukan sekadar UI cantik; struktur visualnya dibuat supaya pelanggan lebih cepat percaya, lebih cepat paham, dan lebih siap untuk order.
+            </p>
+        </div>
+
+        <div class="grid gap-5 lg:grid-cols-2">
+            @foreach ($whyChooseUs as $reason)
+                <article class="rounded-[28px] border border-[var(--border)] bg-[var(--bg-card)] p-6 shadow-[var(--shadow)] transition duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-md)]">
+                    <div class="flex items-start gap-4">
+                        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-[18px] border border-[var(--border)] bg-[var(--bg)] text-[var(--accent-warm)]">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 2 15 8l6 .8-4.5 4.2L18 20l-6-3.2L6 20l1.5-7-4.5-4.2L9 8l3-6z"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3 class="text-[24px] font-medium leading-[1.1] tracking-[-0.01em]">{{ $reason['title'] }}</h3>
+                            <p class="mt-3 text-[14px] leading-[1.75] text-[var(--text-secondary)]">{{ $reason['description'] }}</p>
+                        </div>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+    </section>
+
+    <section id="testimonials" class="pt-16">
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p class="nk-eyebrow">Testimonials</p>
+                <h2 class="mt-4 text-[clamp(2rem,4vw,3.15rem)] font-normal tracking-[-0.02em]">Apa yang ingin didengar pelanggan sebelum order</h2>
+            </div>
+            <a href="{{ route('public.orders.track.create') }}" class="nk-btn-sm">Cek pesanan</a>
+        </div>
+
+        <div class="grid gap-5 lg:grid-cols-3 md:grid-cols-2">
+            @foreach ($testimonials as $testimonial)
+                <article class="rounded-[28px] border border-[var(--border)] bg-[var(--bg-card)] p-6 shadow-[var(--shadow)] transition duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-md)]">
+                    <svg class="h-7 w-7 text-[var(--accent-warm)] opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7.17 6A4.17 4.17 0 0 0 3 10.17v7.66A4.17 4.17 0 0 0 7.17 22h3.66A4.17 4.17 0 0 0 15 17.83v-4.17A4.17 4.17 0 0 0 10.83 9.5H9.5A2.5 2.5 0 0 1 7 7V6h.17ZM18.5 6A4.17 4.17 0 0 0 14.33 10.17v7.66A4.17 4.17 0 0 0 18.5 22h.33A4.17 4.17 0 0 0 23 17.83v-4.17A4.17 4.17 0 0 0 18.83 9.5H17.5A2.5 2.5 0 0 1 15 7V6h3.5Z"></path>
+                    </svg>
+                    <p class="mt-5 text-[15px] leading-[1.8] text-[var(--text)]">{{ $testimonial['quote'] }}</p>
+                    <div class="mt-6 border-t border-[var(--border)] pt-4">
+                        <p class="text-[15px] font-medium tracking-[-0.01em]">{{ $testimonial['name'] }}</p>
+                        <p class="mt-1 text-[12px] uppercase tracking-[0.14em] text-[var(--text-secondary)]">{{ $testimonial['role'] }}</p>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+    </section>
+
     <section class="mt-16 rounded-[32px] border border-[var(--border)] bg-[linear-gradient(135deg,rgba(255,250,245,0.95),rgba(241,234,226,0.95))] p-7 shadow-[var(--shadow)] lg:p-10">
         <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
             <div class="max-w-[620px]">
