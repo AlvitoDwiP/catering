@@ -1,0 +1,47 @@
+export const imageMap = {
+    images: {
+        hero: {
+            main: 'resources/js/assets/images/hero/hero-main.jpg',
+        },
+        categories: {
+            'nasi-box': 'resources/js/assets/images/categories/nasi-box.jpg',
+            'catering-harian': 'resources/js/assets/images/categories/catering-harian.jpg',
+            'snack-box': 'resources/js/assets/images/categories/snack-box.jpg',
+            minuman: 'resources/js/assets/images/categories/minuman.jpg',
+            'paket-acara': 'resources/js/assets/images/categories/paket-acara.jpg',
+        },
+        promotions: {
+            'catering-kantor': 'resources/js/assets/images/promotions/catering-kantor.jpg',
+            'catering-acara': 'resources/js/assets/images/promotions/catering-acara.jpg',
+            'paket-bulanan': 'resources/js/assets/images/promotions/paket-bulanan.jpg',
+        },
+        menus: {
+            'nasi-kotak-ayam': 'resources/js/assets/images/menu/nasi-kotak-ayam.jpg',
+            'nasi-kotak-ikan': 'resources/js/assets/images/menu/nasi-kotak-ikan.jpg',
+            'snack-box-a': 'resources/js/assets/images/menu/snack-box-a.jpg',
+            'snack-box-premium': 'resources/js/assets/images/menu/snack-box-premium.jpg',
+            'es-teh': 'resources/js/assets/images/menu/es-teh.jpg',
+            'air-mineral': 'resources/js/assets/images/menu/air-mineral.jpg',
+            'paket-rapat-hemat': 'resources/js/assets/images/menu/paket-rapat-hemat.jpg',
+        },
+    },
+    placeholders: {
+        menu: 'resources/js/assets/images/placeholders/menu-placeholder.jpg',
+        hero: 'resources/js/assets/images/placeholders/hero-main.jpg',
+        'nasi-box': 'resources/js/assets/images/placeholders/nasi-box.jpg',
+        'catering-harian': 'resources/js/assets/images/placeholders/catering-harian.jpg',
+        'snack-box': 'resources/js/assets/images/placeholders/snack-box.jpg',
+        minuman: 'resources/js/assets/images/placeholders/minuman.jpg',
+        'paket-acara': 'resources/js/assets/images/placeholders/paket-acara.jpg',
+        'catering-kantor': 'resources/js/assets/images/placeholders/catering-kantor.jpg',
+        'catering-acara': 'resources/js/assets/images/placeholders/catering-acara.jpg',
+        'paket-bulanan': 'resources/js/assets/images/placeholders/paket-bulanan.jpg',
+        'nasi-kotak-ayam': 'resources/js/assets/images/placeholders/nasi-kotak-ayam.jpg',
+        'nasi-kotak-ikan': 'resources/js/assets/images/placeholders/nasi-kotak-ikan.jpg',
+        'snack-box-a': 'resources/js/assets/images/placeholders/snack-box-a.jpg',
+        'snack-box-premium': 'resources/js/assets/images/placeholders/snack-box-premium.jpg',
+        'es-teh': 'resources/js/assets/images/placeholders/es-teh.jpg',
+        'air-mineral': 'resources/js/assets/images/placeholders/air-mineral.jpg',
+        'paket-rapat-hemat': 'resources/js/assets/images/placeholders/paket-rapat-hemat.jpg',
+    },
+} as const;

@@ -233,6 +233,64 @@
         font-size: 64px;
     }
 
+    .nk-food-image-shell {
+        position: relative;
+        overflow: hidden;
+        background: var(--bg-alt);
+    }
+
+    .nk-food-image-placeholder,
+    .nk-food-image-skeleton,
+    .nk-food-image-overlay,
+    .nk-food-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .nk-food-image-placeholder {
+        background-position: center;
+        background-size: cover;
+        filter: blur(18px);
+        transform: scale(1.08);
+        opacity: 0.88;
+    }
+
+    .nk-food-image-skeleton {
+        background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(241,234,226,0.9));
+        animation: nkPulse 1.4s ease-in-out infinite;
+        opacity: 1;
+    }
+
+    .nk-food-image {
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.45s ease, transform 0.45s ease;
+        transform: scale(1.015);
+        z-index: 2;
+    }
+
+    .nk-food-image-overlay {
+        z-index: 3;
+        background: linear-gradient(180deg, rgba(20,18,16,0) 0%, rgba(20,18,16,0.04) 42%, rgba(20,18,16,0.24) 100%);
+        pointer-events: none;
+    }
+
+    .nk-food-image-shell.is-loaded .nk-food-image {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .nk-food-image-shell.is-loaded .nk-food-image-skeleton {
+        opacity: 0;
+        animation: none;
+    }
+
+    .nk-food-image-shell.is-loaded .nk-food-image-placeholder {
+        opacity: 0;
+    }
+
     .nk-badge-available {
         display: inline-flex;
         align-items: center;
@@ -337,6 +395,11 @@
 @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.24); opacity: 0.6; }
+}
+
+@keyframes nkPulse {
+    0%, 100% { opacity: 0.82; }
+    50% { opacity: 0.6; }
 }
 
 @media (max-width: 1024px) {

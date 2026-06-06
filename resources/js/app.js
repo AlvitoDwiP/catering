@@ -1,3 +1,7 @@
+import { imageMap } from './constants/imageMap';
+
+window.NK_IMAGE_MAP = imageMap;
+
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', (event) => {
@@ -8,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
+    });
+
+    document.querySelectorAll('[data-food-image-shell] img').forEach((img) => {
+        if (img.complete) {
+            img.closest('[data-food-image-shell]')?.classList.add('is-loaded');
+        }
     });
 
     document.querySelectorAll('[data-add-btn]').forEach((button) => {
