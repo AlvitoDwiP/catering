@@ -10,6 +10,12 @@
             <p class="text-sm text-nk-muted">Harga: <span class="text-nk-text"><x-price :amount="$menu->price" /></span></p>
             <p class="text-sm text-nk-muted">Minimum order: <span class="text-nk-text">{{ $menu->minimum_order }} {{ $menu->unit }}</span></p>
         </div>
+
+        @if($menu->menuIngredients->isEmpty())
+            <div class="mt-4 rounded-xl border border-nk-warning/30 bg-nk-warning/10 p-3 text-sm text-nk-text">
+                Menu ini belum memiliki komposisi bahan/BOM. Tambahkan bahan agar kebutuhan produksi dapat dihitung.
+            </div>
+        @endif
     </x-card>
 
     @if($menu->menuIngredients->isEmpty())
@@ -32,7 +38,7 @@
                 <tr class="border-t border-nk-border/80">
                     <td class="px-4 py-3">{{ $menuIngredient->ingredient?->name ?: '-' }}</td>
                     <td class="px-4 py-3 text-nk-muted">{{ $menuIngredient->ingredient?->category ?: '-' }}</td>
-                    <td class="px-4 py-3 text-nk-muted">{{ number_format((float) $menuIngredient->quantity_per_portion, 2, '.', ',') }}</td>
+                    <td class="px-4 py-3 text-nk-muted"><x-ingredient-qty :value="$menuIngredient->quantity_per_portion" :unit="$menuIngredient->unit" /></td>
                     <td class="px-4 py-3 text-nk-muted">{{ $menuIngredient->unit }}</td>
                     <td class="px-4 py-3">
                         <div class="flex gap-2">

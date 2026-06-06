@@ -31,6 +31,10 @@ class IngredientRecapController extends Controller
             ->get();
 
         $ingredientRecap = $bomCalculationService->calculateForOrders($orders);
+        $newOrdersCount = Order::query()
+            ->where('status', OrderStatus::New->value)
+            ->whereDate('event_date', $date)
+            ->count();
 
         $missingBomOrders = $orders
             ->filter(fn (Order $order) => $bomCalculationService->hasMissingBom($order))
@@ -45,6 +49,7 @@ class IngredientRecapController extends Controller
             'orders' => $orders,
             'ingredientRecap' => $ingredientRecap,
             'missingBomOrders' => $missingBomOrders,
+            'newOrdersCount' => $newOrdersCount,
         ]);
     }
 }

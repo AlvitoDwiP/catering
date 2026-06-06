@@ -16,7 +16,7 @@
                     <x-button href="javascript:window.print()">Print Daftar Bahan</x-button>
                 </div>
             </form>
-            <p class="mt-3 text-sm text-nk-muted">Rekap bahan dihitung berdasarkan jadwal acara (`event_date`) untuk pesanan berstatus dikonfirmasi dan diproses.</p>
+            <p class="mt-3 text-sm text-nk-muted">Rekap bahan hanya menghitung pesanan berstatus Dikonfirmasi dan Diproses berdasarkan tanggal acara.</p>
         </x-card>
     </div>
 
@@ -28,7 +28,11 @@
 
     @if($missingBomOrders->isNotEmpty())
         <div class="mt-6 rounded-xl border border-nk-error/30 bg-nk-error/5 p-4">
-            <p class="text-sm text-nk-error">Ada order/menu tanpa BOM pada tanggal ini. Rekap bahan mungkin belum lengkap.</p>
+            <p class="text-sm text-nk-error">Beberapa menu belum memiliki komposisi bahan, sehingga rekap bahan mungkin belum lengkap.</p>
+            <p class="mt-2 text-sm text-nk-muted">
+                Menu belum lengkap:
+                {{ $missingBomOrders->pluck('menus')->flatten(1)->pluck('menu_name')->unique()->implode(', ') }}
+            </p>
         </div>
     @endif
 
@@ -46,7 +50,14 @@
                     <td class="px-4 py-3"><x-status-badge :status="$order->status" /></td>
                 </tr>
             @empty
-                <tr><td colspan="5" class="px-4 py-6 text-center text-nk-muted">Tidak ada order berstatus dikonfirmasi/diproses untuk tanggal acara yang dipilih.</td></tr>
+                <tr>
+                    <td colspan="5" class="px-4 py-6 text-center text-nk-muted">
+                        Tidak ada pesanan berstatus Dikonfirmasi atau Diproses untuk tanggal acara ini. Pesanan berstatus Baru belum masuk rekap bahan.
+                        @if(($newOrdersCount ?? 0) > 0)
+                            <span class="mt-2 block text-nk-primary">Ada pesanan Baru pada tanggal ini. Konfirmasi pesanan melalui admin agar masuk rekap bahan.</span>
+                        @endif
+                    </td>
+                </tr>
             @endforelse
             </tbody>
         </x-admin-table>
@@ -60,7 +71,14 @@
             @forelse($ingredientRecap as $item)
                 <tr class="border-t border-nk-border/80"><td class="px-4 py-3">{{ $item['ingredient_name'] }}</td><td class="px-4 py-3 text-nk-muted"><x-ingredient-qty :value="$item['total_quantity']" :unit="$item['ingredient_unit']" /></td><td class="px-4 py-3 text-nk-muted">{{ $item['ingredient_unit'] }}</td></tr>
             @empty
-                <tr><td colspan="3" class="px-4 py-6 text-center text-nk-muted">Belum ada data kebutuhan bahan.</td></tr>
+                <tr>
+                    <td colspan="3" class="px-4 py-6 text-center text-nk-muted">
+                        Tidak ada pesanan berstatus Dikonfirmasi atau Diproses untuk tanggal acara ini. Pesanan berstatus Baru belum masuk rekap bahan.
+                        @if(($newOrdersCount ?? 0) > 0)
+                            <span class="mt-2 block text-nk-primary">Ada pesanan Baru pada tanggal ini. Konfirmasi pesanan melalui admin agar masuk rekap bahan.</span>
+                        @endif
+                    </td>
+                </tr>
             @endforelse
             </tbody>
         </x-admin-table>

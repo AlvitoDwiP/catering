@@ -1,5 +1,6 @@
 <x-kitchen-layout title="Dashboard Dapur">
     <x-admin-page-header title="Dashboard Dapur" description="Pantau pesanan yang perlu diproduksi dan kebutuhan bahan hari ini." />
+    <p class="mb-4 text-sm text-nk-muted">Pesanan baru belum tampil sebelum dikonfirmasi admin.</p>
 
     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <x-card padding="lg"><p class="text-sm text-nk-muted">Pesanan Hari Ini</p><p class="mt-2 font-heading text-4xl text-nk-primary">{{ $todayProductionOrders->count() }}</p></x-card>

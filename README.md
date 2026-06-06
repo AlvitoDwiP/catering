@@ -82,6 +82,10 @@ Jika Node dijalankan dari container, sesuaikan dengan environment Docker Anda.
 4. Dapur produksi.
 5. Admin lihat laporan.
 
+## Panduan Demo Skripsi
+Lihat skenario demo lengkap dan checklist black-box di:
+- `docs/demo-scenario.md`
+
 ## Seeder Demo Final
 Seeder berikut dipanggil otomatis saat `migrate:fresh --seed`:
 - `AdminUserSeeder`

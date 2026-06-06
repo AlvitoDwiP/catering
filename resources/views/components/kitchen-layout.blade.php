@@ -11,6 +11,9 @@
         @media print {
             .print\:hidden { display: none !important; }
             .print\:p-0 { padding: 0 !important; }
+            body { background: #fff !important; }
+            main { width: 100% !important; }
+            table { width: 100% !important; font-size: 12px; }
         }
     </style>
 </head>

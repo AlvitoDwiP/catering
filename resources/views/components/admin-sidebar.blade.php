@@ -1,7 +1,7 @@
 <aside class="hidden w-72 border-r border-nk-border bg-nk-card p-6 lg:block">
     <a href="{{ route('admin.dashboard') }}" class="block">
-        <p class="font-heading text-3xl text-nk-text">Nad's Kitchen</p>
-        <p class="text-sm text-nk-muted">Admin Panel</p>
+        <img src="{{ asset('images/nads-kitchen-logo.png') }}" alt="Nad's Kitchen Catering" class="h-auto w-44 max-w-full" />
+        <p class="mt-2 text-sm text-nk-muted">Admin Panel</p>
     </a>
 
     <nav class="mt-8 space-y-2 text-sm">

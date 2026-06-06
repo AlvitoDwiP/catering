@@ -18,6 +18,13 @@
         <x-card class="space-y-3" padding="lg">
             <h3 class="font-heading text-2xl">Status</h3>
             <x-status-badge :status="$order->status" />
+            @if($order->status === \App\Enums\OrderStatus::New)
+                <div class="rounded-xl border border-nk-warning/30 bg-nk-warning/10 p-3 text-sm text-nk-text">
+                    Pesanan ini belum masuk rekap bahan karena belum dikonfirmasi. Ubah status ke Dikonfirmasi agar dapur dapat melihat pesanan dan kebutuhan bahan.
+                </div>
+            @endif
+            <p class="text-xs text-nk-muted">Konfirmasi pesanan agar masuk ke daftar produksi dapur.</p>
+            <p class="text-xs text-nk-muted">Alur status operasional: Baru -> Dikonfirmasi -> Diproses -> Selesai (Dibatalkan tersedia jika pesanan batal).</p>
             <form method="POST" action="{{ route('admin.orders.update-status', $order) }}" class="space-y-3">
                 @csrf @method('PATCH')
                 <select name="status" class="w-full rounded-xl border border-nk-border bg-white/80 px-4 py-3 text-sm">
@@ -27,6 +34,7 @@
                 </select>
                 <x-button type="submit">Update Status</x-button>
             </form>
+            <x-button :href="route('admin.orders.index', ['event_date' => optional($order->event_date)->toDateString(), 'status' => \App\Enums\OrderStatus::Confirmed->value])" variant="secondary">Lihat Rekap Bahan Tanggal Acara Ini</x-button>
         </x-card>
     </div>
 
@@ -89,7 +97,7 @@
                             <td class="px-4 py-3 text-nk-muted">{{ $need['ingredient_unit'] }}</td>
                             <td class="px-4 py-3 text-sm text-nk-muted">
                                 @foreach($need['details'] as $detail)
-                                    <p>{{ $detail['menu_name'] }}: <x-ingredient-qty :value="$detail['quantity_per_portion']" :unit="$detail['unit']" /> {{ $detail['unit'] }} × <x-ingredient-qty :value="$detail['order_quantity']" unit="porsi" /> porsi = <x-ingredient-qty :value="$detail['total_quantity']" :unit="$detail['unit']" /> {{ $detail['unit'] }}</p>
+                                    <p>{{ $detail['menu_name'] }}: <x-ingredient-qty :value="$detail['quantity_per_portion']" :unit="$detail['unit']" /> {{ $detail['unit'] }} × <x-ingredient-qty :value="$detail['order_quantity']" :unit="'porsi'" /> porsi = <x-ingredient-qty :value="$detail['total_quantity']" :unit="$detail['unit']" /> {{ $detail['unit'] }}</p>
                                 @endforeach
                             </td>
                         </tr>

@@ -41,9 +41,12 @@
                 <td class="px-4 py-3">{!! $menu->is_recommended ? '<span class="text-nk-primary">Ya</span>' : '<span class="text-nk-muted">Tidak</span>' !!}</td>
                 <td class="px-4 py-3">
                     @if($menu->menu_ingredients_count > 0)
-                        <span class="rounded-full bg-nk-success/10 px-3 py-1 text-xs font-medium text-nk-success">BOM lengkap</span>
+                        <span class="rounded-full bg-nk-success/10 px-3 py-1 text-xs font-medium text-nk-success">BOM Lengkap</span>
                     @else
-                        <span class="rounded-full bg-nk-error/10 px-3 py-1 text-xs font-medium text-nk-error">BOM kosong</span>
+                        <span class="rounded-full bg-nk-error/10 px-3 py-1 text-xs font-medium text-nk-error">Komposisi bahan belum lengkap</span>
+                        @if($menu->is_available)
+                            <p class="mt-1 text-xs text-nk-error">Menu aktif ini belum memiliki komposisi bahan. Rekap bahan tidak akan lengkap.</p>
+                        @endif
                     @endif
                 </td>
                 <td class="px-4 py-3">

@@ -12,6 +12,7 @@
         </div>
 
         <p class="rounded-xl bg-nk-alt px-4 py-3 text-sm text-nk-text">{{ $order->status->customerMessage() }}</p>
+        <p class="text-sm text-nk-muted">Simpan nomor invoice untuk mengecek status pesanan.</p>
 
         <div class="grid gap-4 md:grid-cols-2">
             <div>

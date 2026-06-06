@@ -34,7 +34,7 @@
 
             @if($hasMissingBom)
                 <div class="rounded-xl border border-nk-error/30 bg-nk-error/5 p-4">
-                    <p class="text-sm text-nk-error">Beberapa menu belum memiliki komposisi bahan sehingga perhitungan belum lengkap.</p>
+                    <p class="text-sm text-nk-error">Beberapa menu belum memiliki komposisi bahan, sehingga rekap bahan mungkin belum lengkap.</p>
                     <ul class="mt-2 list-disc pl-5 text-sm text-nk-muted">
                         @foreach($missingBomMenus as $missingMenu)
                             <li>{{ $missingMenu['menu_name'] }}</li>
@@ -53,7 +53,7 @@
                         <td class="px-4 py-3 text-nk-muted">{{ $need['ingredient_unit'] }}</td>
                         <td class="px-4 py-3 text-sm text-nk-muted">
                             @foreach($need['details'] as $detail)
-                                <p>{{ $detail['menu_name'] }}: <x-ingredient-qty :value="$detail['quantity_per_portion']" :unit="$detail['unit']" /> {{ $detail['unit'] }} × <x-ingredient-qty :value="$detail['order_quantity']" unit="porsi" /> porsi = <x-ingredient-qty :value="$detail['total_quantity']" :unit="$detail['unit']" /> {{ $detail['unit'] }}</p>
+                                <p>{{ $detail['menu_name'] }}: <x-ingredient-qty :value="$detail['quantity_per_portion']" :unit="$detail['unit']" /> {{ $detail['unit'] }} × <x-ingredient-qty :value="$detail['order_quantity']" :unit="'porsi'" /> porsi = <x-ingredient-qty :value="$detail['total_quantity']" :unit="$detail['unit']" /> {{ $detail['unit'] }}</p>
                             @endforeach
                         </td>
                     </tr>

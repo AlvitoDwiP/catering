@@ -1,9 +1,10 @@
 <x-kitchen-layout title="Pesanan Produksi">
     <x-admin-page-header title="Pesanan Produksi" />
+    <p class="mb-4 text-sm text-nk-muted">Daftar ini hanya menampilkan pesanan yang sudah Dikonfirmasi atau Diproses.</p>
 
     <x-card class="mb-5" padding="sm">
         <form method="GET" class="grid gap-3 md:grid-cols-4">
-            <x-input type="date" name="event_date" label="Tanggal acara" :value="request('event_date')" />
+            <x-input type="date" name="event_date" label="Tanggal Acara / Produksi" :value="request('event_date')" />
             <div>
                 <label class="text-sm font-medium text-nk-text">Status</label>
                 <select name="status" class="mt-2 w-full rounded-xl border border-nk-border bg-white/80 px-4 py-3 text-sm">

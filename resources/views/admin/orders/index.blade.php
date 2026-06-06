@@ -28,7 +28,14 @@
                 <td class="px-4 py-3 text-nk-muted">{{ $order->customer_whatsapp }}</td>
                 <td class="px-4 py-3 text-nk-muted"><x-date-time :date="$order->event_date" :time="$order->event_time" variant="compact" /></td>
                 <td class="px-4 py-3 text-nk-muted"><x-price :amount="$order->total_amount" /></td>
-                <td class="px-4 py-3"><x-status-badge :status="$order->status" /></td>
+                <td class="px-4 py-3">
+                    <x-status-badge :status="$order->status" />
+                    @if($order->status === \App\Enums\OrderStatus::New)
+                        <p class="mt-1 text-xs text-nk-warning">Belum masuk produksi</p>
+                    @elseif(in_array($order->status, [\App\Enums\OrderStatus::Confirmed, \App\Enums\OrderStatus::Processing], true))
+                        <p class="mt-1 text-xs text-nk-primary">Masuk produksi</p>
+                    @endif
+                </td>
                 <td class="px-4 py-3"><x-button :href="route('admin.orders.show', $order)" variant="secondary">Detail</x-button></td>
             </tr>
         @empty
