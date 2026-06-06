@@ -49,6 +49,12 @@ docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
+Jika aplikasi dijalankan dari host lokal seperti `http://catering.test` sementara MySQL tetap berjalan di Docker, ubah `.env` menjadi:
+- `DB_HOST=127.0.0.1`
+- `DB_PORT=3307`
+
+Kalau semua service dijalankan lewat `docker compose`, biarkan `DB_HOST=mysql` seperti di `.env.example`.
+
 ### Frontend Assets
 Jika Node dijalankan dari host:
 ```bash
